@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AA Excel to XML Generator</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="page">
+    <section class="hero">
+        <p class="eyebrow">Account Aggregator</p>
+        <h1>Excel to XML Generator</h1>
+    </section>
+
+    <section class="workspace">
+        <aside class="sidebar card">
+            <section class="tool-block">
+                <h2>Holdings</h2>
+                <p>Use this for the <code>&lt;Holdings&gt;</code> block.</p>
+                <div class="actions">
+                    <a class="button secondary" href="/api/templates/holdings">Download Template</a>
+                </div>
+                <form id="holdings-form" class="form">
+                    <label class="field" for="holdings-file">
+                        <span>Upload Holdings Excel</span>
+                    </label>
+                    <label class="file-picker" for="holdings-file">
+                        <span class="file-picker-button">Choose File</span>
+                        <span class="file-picker-name" data-file-name>No file chosen</span>
+                        <input id="holdings-file" type="file" name="file" accept=".xlsx" required>
+                    </label>
+                    <button class="button primary" type="submit">Generate Holdings XML</button>
+                </form>
+            </section>
+
+            <section class="tool-block tool-block-border">
+                <h2>Transactions</h2>
+                <p>Use this for the <code>&lt;Transactions&gt;</code> block.</p>
+                <div class="actions">
+                    <a class="button secondary" href="/api/templates/transactions">Download Template</a>
+                </div>
+                <form id="transactions-form" class="form">
+                    <label class="field" for="transactions-file">
+                        <span>Upload Transactions Excel</span>
+                    </label>
+                    <label class="file-picker" for="transactions-file">
+                        <span class="file-picker-button">Choose File</span>
+                        <span class="file-picker-name" data-file-name>No file chosen</span>
+                        <input id="transactions-file" type="file" name="file" accept=".xlsx" required>
+                    </label>
+                    <button class="button primary" type="submit">Generate Transactions XML</button>
+                </form>
+                <p class="note">Date range is auto-generated: end date is the last day of the current month, and start date is one year before that.</p>
+            </section>
+        </aside>
+
+        <section class="output card output-panel">
+            <div class="output-header">
+                <h2 id="output-title">XML Preview</h2>
+                <button id="copy-btn" class="button ghost" type="button" disabled>Copy XML</button>
+            </div>
+            <pre id="xml-output">Your generated XML will appear here.</pre>
+        </section>
+    </section>
+
+    <footer class="footer-note">Developed by Sanjit Prajapati</footer>
+</main>
+
+<div id="error-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button id="modal-close-x" class="modal-close-circle" type="button" aria-label="Close popup">&times;</button>
+        <div class="modal-hero">
+            <div class="modal-icon-wrap">
+                <div class="modal-icon">!</div>
+            </div>
+            <div class="modal-copy">
+                <p class="modal-kicker">Upload Issue</p>
+                <h2 id="modal-title">We could not process this Excel file</h2>
+                <p class="modal-subtitle">Please check the file format and try again.</p>
+            </div>
+        </div>
+        <p id="modal-message" class="modal-message"></p>
+    </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

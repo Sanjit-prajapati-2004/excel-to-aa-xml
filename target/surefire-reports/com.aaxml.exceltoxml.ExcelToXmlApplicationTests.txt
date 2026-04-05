@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.aaxml.exceltoxml.ExcelToXmlApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.820 s -- in com.aaxml.exceltoxml.ExcelToXmlApplicationTests

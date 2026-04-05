@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to AA XML</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="page">
+    <section class="hero">
+        <p class="eyebrow">Account Aggregator</p>
+        <h1>Excel to XML Generator</h1>
+        <p class="intro">Download the Excel template, fill your values, upload it, and copy the generated XML. Nothing is stored in a database.</p>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <h2>Holdings</h2>
+            <p>Use this for the <code>&lt;Holdings&gt;</code> block.</p>
+            <div class="actions">
+                <a class="button secondary" href="/api/templates/holdings">Download Template</a>
+            </div>
+            <form id="holdings-form" class="form">
+                <label class="field">
+                    <span>Upload Holdings Excel</span>
+                    <input type="file" name="file" accept=".xlsx" required>
+                </label>
+                <button class="button primary" type="submit">Generate Holdings XML</button>
+            </form>
+        </article>
+
+        <article class="card">
+            <h2>Transactions</h2>
+            <p>Use this for the <code>&lt;Transactions&gt;</code> block.</p>
+            <div class="actions">
+                <a class="button secondary" href="/api/templates/transactions">Download Template</a>
+            </div>
+            <form id="transactions-form" class="form">
+                <label class="field">
+                    <span>Start Date</span>
+                    <input type="date" name="startDate" required>
+                </label>
+                <label class="field">
+                    <span>End Date</span>
+                    <input type="date" name="endDate" required>
+                </label>
+                <label class="field">
+                    <span>Upload Transactions Excel</span>
+                    <input type="file" name="file" accept=".xlsx" required>
+                </label>
+                <button class="button primary" type="submit">Generate Transactions XML</button>
+            </form>
+        </article>
+    </section>
+
+    <section class="output card">
+        <div class="output-header">
+            <div>
+                <p class="eyebrow">Generated Output</p>
+                <h2 id="output-title">XML Preview</h2>
+            </div>
+            <button id="copy-btn" class="button ghost" type="button" disabled>Copy XML</button>
+        </div>
+        <pre id="xml-output">Your generated XML will appear here.</pre>
+    </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
