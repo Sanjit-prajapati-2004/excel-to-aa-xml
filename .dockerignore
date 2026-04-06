@@ -4,4 +4,5 @@
 build
 target
 extracted
+src/test
 *.iml

@@ -10,13 +10,19 @@ import org.springframework.stereotype.Component;
 public class AaEquitiesXmlWriter {
 
     private static final String NL = System.lineSeparator();
+    private static final String HOLDING_PREFIX = "  <Holding ";
+    private static final String TRANSACTION_PREFIX = "  <Transaction ";
+    private static final String HOLDINGS_OPEN = "<Holdings type=\"DEMAT\">";
+    private static final String HOLDINGS_CLOSE = "</Holdings>";
+    private static final String TRANSACTIONS_OPEN = "<Transactions ";
+    private static final String TRANSACTIONS_CLOSE = "</Transactions>";
 
     public String writeHoldings(List<HoldingRecord> records) {
-        StringBuilder xml = new StringBuilder();
-        xml.append("<Holdings type=\"DEMAT\">").append(NL);
+        StringBuilder xml = new StringBuilder(estimateCapacity(records.size(), 120));
+        xml.append(HOLDINGS_OPEN).append(NL);
 
         for (HoldingRecord record : records) {
-            xml.append("  <Holding ")
+            xml.append(HOLDING_PREFIX)
                     .append(attribute("issuerName", record.issuerName()))
                     .append(NL)
                     .append(attributeLine("isin", record.isin(), 4))
@@ -25,19 +31,19 @@ public class AaEquitiesXmlWriter {
                     .append(lastAttributeSelfClosingLine("lastTradedPrice", record.lastTradedPrice(), 4));
         }
 
-        xml.append("</Holdings>");
+        xml.append(HOLDINGS_CLOSE);
         return xml.toString();
     }
 
     public String writeTransactions(TransactionsMetadata metadata, List<TransactionRecord> records) {
-        StringBuilder xml = new StringBuilder();
-        xml.append("<Transactions ")
+        StringBuilder xml = new StringBuilder(estimateCapacity(records.size(), 280));
+        xml.append(TRANSACTIONS_OPEN)
                 .append(attribute("startDate", metadata.startDate()))
                 .append(NL)
                 .append(lastAttributeOpenTagLine("endDate", metadata.endDate(), 2));
 
         for (TransactionRecord record : records) {
-            xml.append("  <Transaction ")
+            xml.append(TRANSACTION_PREFIX)
                     .append(attribute("txnId", record.txnId()))
                     .append(NL)
                     .append(attributeLine("orderId", record.orderId(), 4))
@@ -53,8 +59,12 @@ public class AaEquitiesXmlWriter {
                     .append(lastAttributeSelfClosingLine("units", record.units(), 4));
         }
 
-        xml.append("</Transactions>");
+        xml.append(TRANSACTIONS_CLOSE);
         return xml.toString();
+    }
+
+    private int estimateCapacity(int rowCount, int averageRowSize) {
+        return Math.max(256, rowCount * averageRowSize);
     }
 
     private String attribute(String name, String value) {
@@ -74,7 +84,7 @@ public class AaEquitiesXmlWriter {
     }
 
     private String escape(String value) {
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return "";
         }
         return value
